@@ -1,0 +1,29 @@
+{
+  "name": "stripe_integration_demo",
+  "version": "1.0.0",
+  "description": "Web page for accepting donations.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RehanAli21/stripe_integration_demo.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RehanAli21/stripe_integration_demo/issues"
+  },
+  "homepage": "https://github.com/RehanAli21/stripe_integration_demo#readme",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "stripe": "^11.4.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}

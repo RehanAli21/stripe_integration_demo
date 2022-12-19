@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Donation</title>
+		<script>
+			const queryString = window.location.search
+			const urlParams = new URLSearchParams(queryString)
+			const message = urlParams.get('message')
+			console.log(message)
+			const donate = () => {
+				const input = document.getElementById('amountInput')
+
+				if (input) {
+					if (input.value <= 0) return alert('Please enter amount greater then 0')
+
+					fetch('/donate', {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json',
+						},
+						body: JSON.stringify({ amount: input.value }),
+					})
+						.then(res => {
+							if (res.ok) return res.json()
+
+							return res.json().then(json => Promise.reject(json))
+						})
+						.then(({ url }) => {
+							window.location = url
+						})
+						.catch(err => {
+							console.log(err)
+						})
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<h2>Donation</h2>
+		<div>
+			<input type="number" name="amount" id="amountInput" placeholder="Amount" min="1" />
+			<button onclick="donate()">Donate</button>
+		</div>
+	</body>
+</html>
