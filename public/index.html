@@ -5,15 +5,66 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Donation</title>
+		<style>
+			* {
+				outline: none;
+			}
+			.back {
+				position: absolute;
+				top: 0px;
+				left: 0px;
+				margin: 0px;
+				padding: 0px;
+				border-top: 100vh solid orange;
+				border-right: 100vw solid white;
+				z-index: -1;
+				overflow: hidden;
+			}
+			.main {
+				margin-top: 10vh;
+				padding: 0px;
+				text-align: center;
+				font-family: sans-serif;
+			}
+			h1 {
+				font-size: 50px;
+				color: white;
+				text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.8);
+				margin-bottom: 10vh;
+			}
+			input {
+				display: block;
+				margin: 10px auto;
+				padding: 10px 15px;
+				border-radius: 10px;
+				font-size: 20px;
+				border: 2px solid white;
+				box-shadow: 2px 2px 5px grey;
+			}
+			button {
+				background-color: orange;
+				color: white;
+				padding: 5px 10px;
+				border: none;
+				box-shadow: 2px 2px 5px grey, 4px 4px 5px rgba(0, 0, 0, 0.4);
+				font-size: 20px;
+				border-radius: 10px;
+				margin-top: 20px;
+				cursor: pointer;
+			}
+			button:hover {
+				filter: contrast(110%) brightness(95%);
+			}
+			button:active {
+				transform: scale(0.9);
+			}
+		</style>
 		<script>
-			const queryString = window.location.search
-			const urlParams = new URLSearchParams(queryString)
-			const message = urlParams.get('message')
-			console.log(message)
 			const donate = () => {
 				const input = document.getElementById('amountInput')
+				const email = document.getElementById('emailInput')
 
-				if (input) {
+				if (input && email && input.value !== '' && email.value !== '') {
 					if (input.value <= 0) return alert('Please enter amount greater then 0')
 
 					fetch('/donate', {
@@ -21,7 +72,7 @@
 						headers: {
 							'Content-Type': 'application/json',
 						},
-						body: JSON.stringify({ amount: input.value }),
+						body: JSON.stringify({ amount: input.value, email: email.value }),
 					})
 						.then(res => {
 							if (res.ok) return res.json()
@@ -34,13 +85,19 @@
 						.catch(err => {
 							console.log(err)
 						})
+				} else {
+					alert('Please fill all fields')
 				}
 			}
 		</script>
 	</head>
 	<body>
-		<h2>Donation</h2>
-		<div>
+		<div class="back">
+			<div class="white"></div>
+		</div>
+		<div class="main">
+			<h1>Donation</h1>
+			<input type="email" name="email" id="emailInput" placeholder="Email" required="true" />
 			<input type="number" name="amount" id="amountInput" placeholder="Amount" min="1" />
 			<button onclick="donate()">Donate</button>
 		</div>

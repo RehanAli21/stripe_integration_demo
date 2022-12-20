@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>sending Email</title>
+
+		<script>
+			const queryString = window.location.search
+			const urlParams = new URLSearchParams(queryString)
+			const message = urlParams.get('message')
+			const email = urlParams.get('email')
+			const amount = urlParams.get('amount')
+
+			if (message === 'success' && email !== '') {
+				fetch('/email', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify({ amount: amount, email: email }),
+				})
+			}
+
+			window.location = '/'
+		</script>
+	</head>
+	<body></body>
+</html>
